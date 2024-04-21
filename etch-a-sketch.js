@@ -4,14 +4,16 @@ const pixelColor = 'aquamarine';
 const penColor = 'cadetblue';
 
 button.addEventListener('click', () => {
-    prompt('Choose the number of pixels per side.');
+    let length = prompt('Choose the number of pixels per side.');
+    length = Number(length)
+    removeGrid();
+    createGrid(length);
 })
 
-function createPixel() {
+function createPixel(length) {
     const pixel = document.createElement('div');
-    let x = 100/16;
     pixel.classList.add('pixel');
-    pixel.style.flexBasis = `${x}%`;
+    pixel.style.flexBasis = `${length}%`;
     pixel.style.backgroundColor = pixelColor;
 
     pixel.addEventListener('mouseenter', () => {
@@ -21,18 +23,17 @@ function createPixel() {
     canvas.appendChild(pixel);
 }
 
-function resetPixel() {
+function createGrid(length) {
+    for (let i = 0; i < length**2; i++) {
+        createPixel(100/length);
+    }
+}
+
+function removeGrid() {
     const pixels = document.querySelectorAll('.pixel');
     pixels.forEach((pixel) => {
-        pixel.style.backgroundColor = pixelColor;
+        pixel.remove();
     })
 }
 
-function resetGrid() {
-    let response = prompt('Choose the number of pixels per side.');
-
-}
-
-for (let i = 0; i < 256; i++) {
-    createPixel();   
-}
+createGrid(16);
